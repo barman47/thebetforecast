@@ -51,7 +51,6 @@ exports.addContact = async (req, res) => {
 };
 
 exports.subscribeContact = async (req, res) => {
-    console.log(req);
 
     // {
     //     "id": 126122,
@@ -87,18 +86,18 @@ exports.subscribeContact = async (req, res) => {
     const hash = req.headers["verif-hash"];
   
     if(!hash) {
-        return res.status(405).end();
+        return res.status(403).end();
     }
   
     const secret_hash = process.env.FLUTTWERWAVE_VERF_HASH;
   
     if(hash !== secret_hash) {
-        return res.status(405).end();
+        return res.status(403).end();
     }
 
     // Retrieve the req's body
     var payload = JSON.parse(req.body);
-    console.log('Flutterwave request: ', req_json);
+    console.log('Flutterwave request: ', payload);
 
     // SUBSCRIBE CUSTOMER HERE
     mailchimp.setConfig({

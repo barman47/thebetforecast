@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const colors = require('colors');
+const secure = require('express-force-https');
 const dotenv = require('dotenv');
 const path = require('path');
-// const morgan = require('morgan');
 
 const audience = require('./routes/audience');
 
@@ -15,9 +15,7 @@ dotenv.config({ path: './config/config.env' });
 
 const app = express();
 
-// if (process.env.NODE_ENV === 'development') {
-//     app.use(morgan('dev'));
-// }
+app.use(secure);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
