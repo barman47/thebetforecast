@@ -1,0 +1,33 @@
+.home {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+    height: 100%;
+}
+
+.home div:first-child {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.home div:first-child a {
+    color: inherit;
+}
+.home div:first-child a:visited {
+    color: inherit;
+}
+
+.home div:last-child {
+    justify-self: center;
+    width: 90%;
+}
+
+.home div:last-child img {
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .home {
+        grid-template-columns: 1fr;
+    }
+}

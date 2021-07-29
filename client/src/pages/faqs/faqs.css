@@ -1,0 +1,44 @@
+.faqs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+    height: 100%;
+}
+
+.faqs div:first-child {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    row-gap: 1rem;
+}
+
+.faqs div:first-child a {
+    color: inherit;
+}
+.faqs div:first-child a:visited {
+    color: inherit;
+}
+
+.faqs div:first-child p {
+    margin: 0;
+}
+
+.faqs div:first-child h1, .faqs div:first-child h2 {
+    margin: 0;
+}
+
+.faqs div:last-child {
+    justify-self: center;
+    width: 90%;
+}
+
+.faqs div:last-child img {
+    width: 100%;
+}
+
+@media screen and (max-width: 480px) {
+    .faqs {
+        grid-template-columns: 1fr;
+    }   
+}

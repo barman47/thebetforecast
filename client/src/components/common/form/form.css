@@ -1,0 +1,41 @@
+form {
+    height: 3rem;
+    display: grid;
+    column-gap: 0.5rem;
+    grid-template-columns: 1fr 0.13fr;
+}
+
+input[type=email] {
+    height: initial;
+    border: 1px solid #f55f44;
+    border-radius: 2px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+input[type=email]:focus {
+    border: 1px solid #ff2b05;
+}
+
+button {
+    background-color: #f55f44;
+    border: none;
+    border-radius: 2px;
+    color: #f8f8f8;
+    cursor: pointer;
+    transition: 0.3s linear all;
+}
+
+button:hover {
+    background-color: #ff2b05;
+}
+
+small {
+    color: #ff2b05;
+}
+
+@media screen and (max-width: 480px) {
+    form {
+        grid-template-columns: 1fr 0.2fr;
+    }   
+}
