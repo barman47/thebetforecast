@@ -87,7 +87,7 @@ exports.subscribeContact = async (req, res) => {
     }
 
     // Retrieve the req's body
-    var payload = JSON.parse(req.body);
+    var payload = req.body;
     console.log('Flutterwave request: ', payload);
 
     // SUBSCRIBE CUSTOMER HERE
