@@ -105,7 +105,7 @@ exports.subscribeContact = async (req, res) => {
         tags: [{ name: SUBSCRIBED, status: 'active' }, { name: UNSUBSCRIBED, status: 'inactive' }]
     });
 
-    await client.lists.setListMember(listId, subscriberHash, {
+    await mailchimp.lists.setListMember(listId, subscriberHash, {
         email_address: email,
         merge_fields: {
             FNAME: name.split(' ')[0],
