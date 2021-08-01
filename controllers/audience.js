@@ -96,22 +96,24 @@ exports.subscribeContact = async (req, res) => {
         server: process.env.MAILCHIMP_SERVER_PREFIX
     });
 
+    const { email, name } = payload.data.customer;
+
     const listId = process.env.MAILCHIMP_LIST_ID;
-    const subscriberHash = md5(payload.email.toLowerCase());
+    const subscriberHash = md5(email.toLowerCase());
 
     await mailchimp.lists.updateListMemberTags(listId, subscriberHash, {
         tags: [{ name: SUBSCRIBED, status: 'active' }, { name: UNSUBSCRIBED, status: 'inactive' }]
     });
 
     await client.lists.setListMember(listId, subscriberHash, {
-        email_address: payload.email,
+        email_address: email,
         merge_fields: {
-            FNAME: payload.name.split(' ')[0],
-            LNAME: payload.name.split(' ')[1]
+            FNAME: name.split(' ')[0],
+            LNAME: name.split(' ')[1]
         },
         status: 'subscribed'
     });
 
-    console.log(`${payload.customer.email} subscribed successfully`);
+    console.log(`${email} subscribed successfully`);
     return res.status(200).end();
 };
