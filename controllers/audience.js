@@ -4,6 +4,7 @@ const Validator = require('validator');
 const returnError = require('../utils/returnError');
 
 const { SUBSCRIBED, UNSUBSCRIBED } = require('../utils/constants');
+const sendEmail = require('../utils/sendEmail');
 
 exports.addContact = async (req, res) => {
     try {
@@ -20,25 +21,15 @@ exports.addContact = async (req, res) => {
         });
 
         const listId = process.env.MAILCHIMP_LIST_ID;
-        const subscriberHash = md5(payload.customer.email.toLowerCase());
-
-        const response = await client.lists.setListMember(listId, subscriberHash, {
-            email_address: payload.customer.email,
-            merge_fields: {
-                FNAME: payload.customer.fullName.split(' ')[0],
-                LNAME: payload.customer.fullName.split(' ')[1]
-            },
-            tags: [SUBSCRIBED],
+        
+        const response = await mailchimp.lists.addListMember(listId, {
+            email_address: req.body.email,
+            tags: [UNSUBSCRIBED],
             status: 'subscribed'
         });
-        
-        // const response = await mailchimp.lists.addListMember(listId, {
-        //     email_address: req.body.email,
-        //     tags: [UNSUBSCRIBED],
-        //     status: 'subscribed'
-        // });
 
-        console.log(response);
+        await sendEmail(req.body.email);
+
         console.log(`Successfully added contact as an audience member. The contact's ID is ${response.id}`);
         return res.status(201).json({
             success: true,
@@ -108,59 +99,19 @@ exports.subscribeContact = async (req, res) => {
     const listId = process.env.MAILCHIMP_LIST_ID;
     const subscriberHash = md5(payload.customer.email.toLowerCase());
 
+    await mailchimp.lists.updateListMemberTags(listId, subscriberHash, {
+        tags: [{ name: SUBSCRIBED, status: 'active' }, { name: UNSUBSCRIBED, status: 'inactive' }]
+    });
+
     await client.lists.setListMember(listId, subscriberHash, {
         email_address: payload.customer.email,
         merge_fields: {
             FNAME: payload.customer.fullName.split(' ')[0],
             LNAME: payload.customer.fullName.split(' ')[1]
         },
-        tags: [SUBSCRIBED],
         status: 'subscribed'
     });
 
     console.log(`${payload.customer.email} subscribed successfully`);
     return res.status(200).end();
-};
-
-exports.createAudience = (req, res) => {
-
-    // mailchimp.setConfig({
-    // apiKey: "YOUR_API_KEY",
-    // server: "YOUR_SERVER_PREFIX"
-    // });
-
-    // const event = {
-    // name: "JS Developers Meetup"
-    // };
-
-    // const footerContactInfo = {
-    // company: "Mailchimp",
-    // address1: "675 Ponce de Leon Ave NE",
-    // address2: "Suite 5000",
-    // city: "Atlanta",
-    // state: "GA",
-    // zip: "30308",
-    // country: "US"
-    // };
-
-    // const campaignDefaults = {
-    // from_name: "Gettin' Together",
-    // from_email: "gettintogether@example.com",
-    // subject: "JS Developers Meetup",
-    // language: "EN_US"
-    // };
-
-    // async function run() {
-    //     const response = await mailchimp.lists.createList({
-    //         name: event.name,
-    //         contact: footerContactInfo,
-    //         permission_reminder: "permission_reminder",
-    //         email_type_option: true,
-    //         campaign_defaults: campaignDefaults
-    //     });
-
-    //     console.log(
-    //         `Successfully created an audience. The audience id is ${response.id}.`
-    //     );
-    // }
 };
