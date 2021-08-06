@@ -14,16 +14,16 @@ const Home = () => {
             <section className="home">
                 <div>
                     <h1>Get great bet tips from<br /> expert tipsters</h1>
-                    <p>Our tipsters use data and expertise to find the best bets.</p>
+                    <p>Our tipsters use data and expertise to find the best bets. We do the research, you do the winning!</p>
                     <Form />
                     <div className="price">
-                        <div>
-                            <h2>Yearly</h2>
-                            <h3>Full Access</h3>
-                        </div>
-                        <p>&#8358;10,000</p>
+                        {/* <div> */}
+                            <h4>Full Access</h4>
+                            <p>&#8358;10,000 Yearly</p>
+                            {/* <h4></h4> */}
+                        {/* </div> */}
                     </div>
-                    <p>We do the research, you do the winning!</p>
+                    {/* <p>We do the research, you do the winning!</p> */}
                     <Link to={FAQS}>Got questions? Read our FAQS</Link>
                 </div>
                 <div>
