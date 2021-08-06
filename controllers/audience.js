@@ -24,7 +24,9 @@ exports.addContact = async (req, res) => {
         });
 
         const listId = process.env.MAILCHIMP_LIST_ID;
+        // const subscriberHash = md5(req.body.email.toLowerCase());
         
+        // const response = await mailchimp.lists.setListMember(listId, subscriberHash);
         const response = await mailchimp.lists.addListMember(listId, {
             email_address: req.body.email,
             tags: [UNSUBSCRIBED],
@@ -44,6 +46,14 @@ exports.addContact = async (req, res) => {
         });
 
     } catch (err) {
+        const title = 'Member Exists';
+        if (err.response.body.title === title) {
+            console.log(err.response.body.detail);
+            return res.status(201).json({
+                success: true,
+                data: { msg: 'Contact successfully added', paymentUrl: 'https://flutterwave.com/pay/thebetforecastsubscribe' }
+            });
+        }
         return returnError(err, res, 500, 'Unable to add contact');
     }
 };
