@@ -4,7 +4,7 @@ const colors = require('colors');
 const secure = require('express-force-https');
 const { CronJob } = require('cron');
 const dotenv = require('dotenv');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.options('*', cors());
 
-app.use(helmet());
+// app.use(helmet());
 app.disable('x-powered-by');
 app.use(hpp());
 app.use(mongoSanitize())
