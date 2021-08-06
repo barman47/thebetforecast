@@ -4,17 +4,22 @@ import ScrollToTop from './components/layout/ScrollToTop';
 
 import Home from './pages/home/Home';
 import Faqs from './pages/faqs';
-import { FAQS } from './routes';
+import SubscriptionSuccess from './pages/subscriptionSuccess/SubscriptionSuccess';
+import PageNotFound from './pages/pageNotFound/PageNotFound';
+
+import { FAQS, SUBSCRIPTION_SUCCESS } from './routes';
 
 function App() {
 	return (
 		<Router>
-			<Switch>
-				<ScrollToTop>
+			<ScrollToTop>
+				<Switch>
 					<Route path="/" exact component={Home} />
 					<Route path={FAQS} exact component={Faqs} />
-				</ScrollToTop>
-			</Switch>
+					<Route path={SUBSCRIPTION_SUCCESS} exact component={SubscriptionSuccess} />
+					<Route component={PageNotFound} />
+				</Switch>
+			</ScrollToTop>
 		</Router>
 	);
 }

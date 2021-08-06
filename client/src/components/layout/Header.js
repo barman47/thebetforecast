@@ -1,10 +1,10 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
 
 const Header = () => {
     return (
-        <img src={logo} alt="TheBetForecast Logo" />
+        <Link to="/"><img src={logo} alt="TheBetForecast Logo" /></Link>
     );
 }
 

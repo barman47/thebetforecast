@@ -30,8 +30,17 @@ button:hover {
     background-color: #ff2b05;
 }
 
+button:disabled {
+    background-color: #e9e9e9;
+    pointer-events: none;
+}
+
 small {
     color: #ff2b05;
+}
+
+.disabled-icon {
+    color: #a8a8a8;
 }
 
 @media screen and (max-width: 480px) {

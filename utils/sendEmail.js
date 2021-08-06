@@ -2,7 +2,7 @@
 var nodemailer = require("nodemailer");
 var mandrillTransport = require('nodemailer-mandrill-transport');
 
-const sendEmail = async (email) => {
+const sendEmail = async (recipient, subject, msg) => {
 	// console.log('API KEY: ', process.env.MANDRILL_API_KEY);
     // const message = {
     //     from_email: "hello@thebetforecast.com",
@@ -28,10 +28,10 @@ const sendEmail = async (email) => {
 	// Put in email details.
 	
 	let mailOptions={
-	   from : 'hello@thebetforecast.com',
-	   to : email,
-	   subject : "This is from Mandrill",
-	   html : `Sending this email using mandrill and nodejs`
+	   from: 'editor@thebetforecast.com',
+	   to: recipient,
+	   subject,
+	   html: msg
 	};
 	
 	// Sending email.

@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
+    align-items: center;
     height: 100%;
 }
 
@@ -24,6 +25,31 @@
 
 .home div:last-child img {
     width: 100%;
+}
+
+.home .price {
+    border: 1px solid #e9e9e9;
+    display: flex;
+    border-radius: 3px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    max-width: 100%;
+    padding: 1rem;
+}
+
+.home .price div h2 {
+    margin-bottom: 20px;
+}
+
+.home .price p:last-child {
+    color: #333333;
+}
+
+h2, h3 {
+    color: #333333;
+    margin: 0;
 }
 
 @media screen and (max-width: 768px) {
