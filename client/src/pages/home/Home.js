@@ -14,7 +14,8 @@ const Home = () => {
             <section className="home">
                 <div>
                     <h1>Get great bet tips from<br /> expert tipsters</h1>
-                    <p>Our tipsters use data and expertise to find the best bets. We do the research, you do the winning!</p>
+                    {/* <p>Our tipsters use data and expertise to find the best bets. We do the research, you do the winning!</p> */}
+                    <p>Our team will use data and expertise to find the best bets and send them to you <strong><em>everyday!</em></strong> We do the research, you do the winning!</p>
                     <Form />
                     <div className="price">
                         {/* <div> */}

@@ -27,7 +27,7 @@ const Faqs = () => {
                     </p>
                     <p>
                         <strong>How much do I pay?</strong><br />
-                        TheBetforecast charges N10,000 for yearly access. Sign up, pay and start receiving our tips!
+                        TheBetforecast charges &#8358;10,000 for yearly access. Sign up, pay and start receiving our tips!
                     </p>
                     <hr />
                     <h2>Ready to start winning?</h2>
