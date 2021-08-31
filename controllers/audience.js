@@ -1,5 +1,12 @@
 const mailchimp = require('@mailchimp/mailchimp_marketing');
 const md5 = require('md5');
+const SendXRestApi = require('send_x_rest_api');
+const api = new SendXRestApi.ContactApi();
+
+const apiKey = "apiKey_example"; // {String} 
+
+const teamId = "teamId_example"; // {String}
+
 const moment = require('moment-timezone');
 
 const Validator = require('validator');
@@ -104,32 +111,28 @@ exports.subscribeContact = async (req, res) => {
             return res.status(403).end();
         }
 
-        var payload = req.body;
+        const payload = req.body;
         // console.log('Flutterwave request: ', payload);
 
         // SUBSCRIBE CUSTOMER HERE
-        mailchimp.setConfig({
-            apiKey: process.env.MAILCHIMP_API_KEY,
-            server: process.env.MAILCHIMP_SERVER_PREFIX
-        });
 
         const { email, name } = payload.data.customer;
 
-        const listId = process.env.MAILCHIMP_LIST_ID;
-        const subscriberHash = md5(email.toLowerCase());
+        const contactDetails = new SendXRestApi.ContactRequest(); // {ContactRequest} Contact details
 
-        await mailchimp.lists.updateListMemberTags(listId, subscriberHash, {
-            tags: [{ name: SUBSCRIBED, status: 'active' }, { name: UNSUBSCRIBED, status: 'inactive' }]
-        });
+        contactDetails.email = email;
+        contactDetails.firstName = name.split(' ')[0];
+        contactDetails.lastName = name.split(' ')[1];
+        contactDetails.tags = ["Developer"];
 
-        await mailchimp.lists.setListMember(listId, subscriberHash, {
-            email_address: email,
-            merge_fields: {
-                FNAME: name.split(' ')[0],
-                LNAME: name.split(' ')[1]
-            },
-            status: 'subscribed'
-        });
+        const callback = function(error, data, response) {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('API called successfully. Returned data: ' + data);
+        }
+        };
+        api.contactIdentifyPost(apiKey, teamId, contactDetails, callback);
 
         const subscriber = await Subscriber.findOne({ email: email.toLowerCase() });
 
@@ -147,21 +150,29 @@ exports.subscribeContact = async (req, res) => {
         subscriber.subscriptionDate = moment(new Date()).tz('Africa/Bangui');
         await subscriber.save();
 
-
-        // const message = `
-        //     <p>Hello ${name.split(' ')[0]} ${name.split(' ')[1]}</p>
-        //     <p>Welcome to TheBetforecast! Here's what to expect: you'll get one email from us every morning in which we'll share our betting tips for the day.</p>
-        //     <p>Our picks are well-researched and the reasoning for each pick will be shared. You can expect a mix of "Safe", "Medium-risk" and "High-risk" labeled picks from us, depending on the daily volume of games available. But no matter the case, we always aim to ensure you win. </p>
-        //     <p>Email <a href="mailto:tips@thebetforecast.com">tips@thebetforecast.com</a> for any questions or inquiries.</p>
-        //     <p>Welcome!</p>
-        // `;
-
-        // await sendEmail(email, 'Welcome to TheBetForecast', message);
         console.log(`${email} subscribed successfully`);
         return res.status(200).end();
     } catch (err) {
         return returnError(err, res, 500, 'Unable to subscribe contact');
     }
+};
+
+exports.checkAddContact = (req, res) => {
+    const contactDetails = new SendXRestApi.ContactRequest(); // {ContactRequest} Contact details
+
+        contactDetails.email = req.body.email;
+        contactDetails.firstName = req.body.firstName
+        contactDetails.lastName = req.body.lastName
+        contactDetails.tags = ["Developer"];
+
+        const callback = function(error, data, response) {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('API called successfully. Returned data: ' + data);
+        }
+        };
+        api.contactIdentifyPost(apiKey, teamId, contactDetails, callback);
 };
 
 exports.checkContacts = async () => {

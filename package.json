@@ -45,6 +45,7 @@
     "nodemailer": "^6.6.3",
     "nodemailer-mandrill-transport": "^1.2.0",
     "request": "^2.88.2",
+    "send_x_rest_api": "^1.0.0",
     "validator": "^13.6.0"
   },
   "devDependencies": {
