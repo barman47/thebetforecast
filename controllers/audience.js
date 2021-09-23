@@ -1,11 +1,6 @@
 const mailchimp = require('@mailchimp/mailchimp_marketing');
 const md5 = require('md5');
 const SendXRestApi = require('send_x_rest_api');
-const api = new SendXRestApi.ContactApi();
-
-const apiKey = "apiKey_example"; // {String} 
-
-const teamId = "teamId_example"; // {String}
 
 const moment = require('moment-timezone');
 
@@ -160,19 +155,28 @@ exports.subscribeContact = async (req, res) => {
 exports.checkAddContact = (req, res) => {
     const contactDetails = new SendXRestApi.ContactRequest(); // {ContactRequest} Contact details
 
-        contactDetails.email = req.body.email;
-        contactDetails.firstName = req.body.firstName
-        contactDetails.lastName = req.body.lastName
-        contactDetails.tags = ["Developer"];
+    const api = new SendXRestApi.ContactApi();
 
-        const callback = function(error, data, response) {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('API called successfully. Returned data: ' + data);
-        }
-        };
-        api.contactIdentifyPost(apiKey, teamId, contactDetails, callback);
+    const apiKey = process.env.SENDX_API_KEY;
+    const teamId = process.env.SENDX_TEAM_ID;
+
+    contactDetails.email = req.body.email;
+    contactDetails.firstName = req.body.firstName
+    contactDetails.lastName = req.body.lastName
+    contactDetails.tags = ["Developer"];
+
+    api.contactIdentifyPost(apiKey, teamId, contactDetails, (err, data, response) => {
+        if (err) {
+            return console.err(error);
+        } 
+
+        console.log('API called successfully. Returned data: ' + data);
+        return res.status(200).json({
+            msg: 'Contact added successfully',
+            data,
+            response
+        });
+    });
 };
 
 exports.checkContacts = async () => {

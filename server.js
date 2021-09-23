@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const colors = require('colors');
-const secure = require('express-force-https');
+// const secure = require('express-force-https');
 const { CronJob } = require('cron');
 const dotenv = require('dotenv');
 // const helmet = require('helmet');
@@ -31,7 +31,7 @@ connectDB();
 
 const app = express();
 
-app.use(secure);
+// app.use(secure);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

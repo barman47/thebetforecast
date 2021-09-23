@@ -1,2 +1,5 @@
 node_modules/
 config/config.env
+betforecast.zip
+key-pair.pem
+build

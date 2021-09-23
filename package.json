@@ -2,7 +2,7 @@
   "name": "betforecast",
   "version": "1.0.0",
   "description": "BetForecast is a premium football bet tips service. Our expert tipsters source the best bets for our subscribers everyday!",
-  "main": "./src/server.ts",
+  "main": "server.js",
   "scripts": {
     "client": "npm start --prefix client",
     "client-build": "npm run build --prefix client",
