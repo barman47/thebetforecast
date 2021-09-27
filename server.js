@@ -45,7 +45,7 @@ app.use(hpp());
 app.use(mongoSanitize())
 app.use(limiter);
 
-app.use('/audience', audience);
+app.use('/api/audience', audience);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(publicPath));
