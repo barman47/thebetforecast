@@ -42,7 +42,7 @@ const Form = () => {
         setLoading(true);
         setErrors({});
         try {
-            const res = await axios.post('/api/audience', { email });
+            const res = await axios.post('/api/subscribers', { email });
             setLoading(false);
             window.location = res.data.data.paymentUrl;
         } catch (err) {
