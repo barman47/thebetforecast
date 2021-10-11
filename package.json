@@ -25,8 +25,6 @@
   "author": "Uzoanya Dominic",
   "license": "MIT",
   "dependencies": {
-    "@mailchimp/mailchimp_marketing": "^3.0.56",
-    "@mailchimp/mailchimp_transactional": "^1.0.31",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "cron": "^1.8.2",
@@ -39,13 +37,9 @@
     "flutterwave-node-v3": "^1.0.8",
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
-    "md5": "^2.3.0",
     "moment-timezone": "^0.5.33",
     "mongoose": "^5.13.5",
-    "nodemailer": "^6.6.3",
-    "nodemailer-mandrill-transport": "^1.2.0",
     "request": "^2.88.2",
-    "send_x_rest_api": "^1.0.0",
     "validator": "^13.6.0"
   },
   "devDependencies": {

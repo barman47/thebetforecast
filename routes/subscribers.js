@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { addContact, subscribeContact, checkAddContact } = require('../controllers/audience');
+const { addContact, subscribeContact } = require('../controllers/subscribers');
 
 router.post('/', addContact);
 router.post('/subscribe', subscribeContact);
-router.post('/addContact', checkAddContact);
 
 module.exports = router;

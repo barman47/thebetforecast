@@ -26,6 +26,10 @@ const SubscriberSchema = new mongoose.Schema({
         type: Date
     },
 
+    expiryDate: {
+        type: Date
+    },
+
     createdAt: {
         type: Date,
         default: moment(Date.now()).tz('Africa/Bangui')

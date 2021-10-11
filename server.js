@@ -10,10 +10,10 @@ const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 
-const audience = require('./routes/audience');
+const subscribers = require('./routes/subscribers');
 
 const connectDB = require('./config/db');
-const { checkContacts } = require('./controllers/audience');
+const { checkContacts } = require('./controllers/subscribers');
 
 const PORT = process.env.PORT || 5000;
 const publicPath = path.resolve(__dirname, 'client', 'build');
@@ -45,7 +45,7 @@ app.use(hpp());
 app.use(mongoSanitize())
 app.use(limiter);
 
-app.use('/api/audience', audience);
+app.use('/api/subscribers', subscribers);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(publicPath));
@@ -55,8 +55,8 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-const job = new CronJob('0 0 0 * * *', checkContacts, null, true, 'Africa/Bangui');
-job.start();
+// const job = new CronJob('0 0 0 * * *', checkContacts, null, true, 'Africa/Bangui');
+// job.start();
 
 checkContacts();
 
