@@ -1,10 +1,4 @@
-const md5 = require('md5');
-const superagent = require('superagent');
-const axios = require('axios');
 const request = require('request');
-var Sendy = require('sendy-api'),
-    sendy = new Sendy('https://sendy.thebetforecast.com/', 'LDJhfyYvpU2Hu2N1RFPu');
-
 const moment = require('moment-timezone');
 
 const Validator = require('validator');
