@@ -22,7 +22,8 @@ exports.addContact = async (req, res) => {
         const data = {
             api_key: `${process.env.SENDY_API_KEY}`,
             email,
-            list: listId
+            list: listId,
+            DateAdded: moment(Date.now()).tz('Africa/Bangui').toString()
         };
 
         request.post({  url: `${process.env.SENDY_URL}/subscribe`, formData: data}, async (err, httpResponse, body) => {
@@ -76,17 +77,17 @@ exports.subscribeContact = async (req, res) => {
         //   }
     
         // retrieve the signature from the header
-        const hash = req.headers["verif-hash"];
+        // const hash = req.headers["verif-hash"];
     
-        if(!hash) {
-            return res.status(403).end();
-        }
+        // if(!hash) {
+        //     return res.status(403).end();
+        // }
     
-        const secret_hash = process.env.FLUTTWERWAVE_VERF_HASH;
+        // const secret_hash = process.env.FLUTTWERWAVE_VERF_HASH;
     
-        if(hash !== secret_hash) {
-            return res.status(403).end();
-        }
+        // if(hash !== secret_hash) {
+        //     return res.status(403).end();
+        // }
 
         const payload = req.body;
         // console.log('Flutterwave request: ', payload);
@@ -102,19 +103,24 @@ exports.subscribeContact = async (req, res) => {
         const paidData = {
             api_key: `${process.env.SENDY_API_KEY}`,
             email,
-            list: paidListId
+            list: paidListId,
+            Name: name,
+            DateAdded: moment(Date.now()).tz('Africa/Bangui').toString()
         };
 
         const unpaidData = {
             api_key: `${process.env.SENDY_API_KEY}`,
             email,
-            list_id: unpaidListId
+            list_id: unpaidListId,
+            DateAdded: moment(Date.now()).tz('Africa/Bangui').toString()
         };
 
         const expiredData = {
             api_key: `${process.env.SENDY_API_KEY}`,
             email,
-            list_id: expiredListId
+            list_id: expiredListId,
+            Name: name,
+            DateAdded: moment(Date.now()).tz('Africa/Bangui').toString()
         };
 
         // Add subscriber to paid list
@@ -139,7 +145,6 @@ exports.subscribeContact = async (req, res) => {
                 if (err) {
                     return console.error('upload failed:', err);
                 }
-                console.log(`${email} subscribed successfully`);
                 return res.status(200).end();
             });
         });
@@ -157,12 +162,14 @@ exports.checkContacts = async () => {
 
         const expiredData = {
             api_key: `${process.env.SENDY_API_KEY}`,
-            list: expiredListId
+            list: expiredListId,
+            DateAdded: moment(Date.now()).tz('Africa/Bangui').toString()
         };
 
         const subscribedData = {
             api_key: `${process.env.SENDY_API_KEY}`,
-            list_id: paidListId
+            list_id: paidListId,
+            DateAdded: moment(Date.now()).tz('Africa/Bangui').toString()
         };
 
         const subscribers = await Subscriber.find({ subscribed: true });
